@@ -22,6 +22,8 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +41,11 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.lapoushko.core_ui.theme.AppTypography
+import com.lapoushko.core_ui.theme.LightGray
+import com.lapoushko.core_ui.theme.MainBlue
+import com.lapoushko.core_ui.theme.MiddleGray
+import com.lapoushko.core_ui.theme.TooLightGray
 import com.lapoushko.navigation.graph.BottomNavigationGraph
 import com.lapoushko.navigation.model.ScreenBar
 
@@ -103,23 +110,51 @@ fun BottomBar(
 
     NavigationBar(
         modifier = Modifier
-            .padding(start = 20.dp, end = 20.dp)
+            .padding(start = 20.dp, end = 20.dp, bottom = 34.dp)
             .border(
                 width = 1.dp,
-                color = Color(0xFFE6E6E6),
+                color = TooLightGray,
                 shape = RoundedCornerShape(20.dp)
-            )
-            .background(Color.Transparent, RoundedCornerShape(20.dp)),
+            ),
         containerColor = Color.Transparent,
-        contentColor = Color.Unspecified,
         tonalElevation = 0.dp
     ) {
         items.forEach { screen ->
-            AddItem(
-                screen = screen,
-                destination = destination,
-                navController = navController,
-                badges = 0
+
+            val isSelected =
+                destination?.hierarchy?.any { it.route == screen.route } == true
+
+            NavigationBarItem(
+                selected = isSelected,
+                onClick = {
+                    navController.navigate(screen.route) {
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true
+                    }
+                },
+                icon = {
+                    Icon(
+                        painter = painterResource(screen.idIcon),
+                        contentDescription = screen.title,
+                        modifier = Modifier.size(36.dp),
+                        tint = if (isSelected) MainBlue else LightGray
+                    )
+                },
+                label = {
+                    Text(
+                        text = screen.title,
+                        style = AppTypography.H5Medium,
+                        color = if (isSelected) MainBlue else MiddleGray
+                    )
+                },
+                alwaysShowLabel = true,
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = MainBlue,
+                    unselectedIconColor = LightGray,
+                    selectedTextColor = MainBlue,
+                    unselectedTextColor = MiddleGray,
+                    indicatorColor = Color.Transparent,
+                )
             )
         }
     }
@@ -151,14 +186,7 @@ private fun RowScope.AddItem(
     ) {
         BadgedBox(
             badge = {
-                if (badges > 0) {
-                    Badge(
-                        containerColor = Color.Red,
-                        contentColor = Color.White
-                    ) {
-                        Text(text = if (badges > 99) "99+" else "$badges")
-                    }
-                }
+
             }
         ) {
             CustomNavIcon(
@@ -169,8 +197,8 @@ private fun RowScope.AddItem(
         }
         Text(
             text = screen.title,
-            color = if (isSelected) Color.Blue else Color.Gray,
-            style = MaterialTheme.typography.labelSmall
+            color = if (isSelected) MainBlue else MiddleGray,
+            style = AppTypography.H5Medium
         )
     }
 }
@@ -182,7 +210,7 @@ private fun CustomNavIcon(
     title: String,
     isActive: Boolean
 ) {
-    val tint = if (isActive) Color.Blue else Color.Gray
+    val tint = if (isActive) MainBlue else LightGray
     Icon(
         modifier = modifier.size(36.dp),
         painter = painterResource(id),

@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-parcelize")
-    kotlin("plugin.serialization") version "2.0.0"
 }
 
 android {
-    namespace = "com.lapoushko.navigation"
+    namespace = "com.lapoushko.core_ui"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -53,17 +51,4 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.material3)
-
-    //Navigation
-    implementation(libs.androidx.navigation.compose)
-
-    //Serialization
-    implementation(libs.kotlinx.serialization.json.jvm)
-
-    // Koin
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.navigation)
-    implementation(libs.koin.androidx.compose)
-
-    implementation(project(":core-ui"))
 }

@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "app_test_dental"
 include(":app")
 include(":navigation")
+include(":core-ui")
