@@ -11,7 +11,7 @@ val Blue400 = Color(0xFF8B9AF8)
 val Blue300 = Color(0xFFA2AEF9)
 val Blue200 = Color(0xFFBAC3FB)
 val Blue100 = Color(0xFFD0D6FC)
-val Blue50  = Color(0xFFE8EBFE)
+val MainBlue10  = Color(0xFFE8EBFE)
 
 // Second Blue
 val SecondBlue = Color(0xFF007AEB)

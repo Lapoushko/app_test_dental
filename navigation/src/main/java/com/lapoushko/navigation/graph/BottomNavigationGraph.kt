@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.lapoushko.navigation.model.Screen
 import com.lapoushko.navigation.model.ScreenBar
+import com.lapoushko.profile_impl.presentation.ProfileScreen
 
 /**
  * @author Lapoushko
@@ -36,7 +37,7 @@ fun BottomNavigationGraph(navController: NavHostController) {
             Text(modifier = Modifier.fillMaxSize(), text = "Корзина")
         }
         composable(ScreenBar.Profile.route) {
-            Text(modifier = Modifier.fillMaxSize(), text = "Профиль")
+            ProfileScreen()
         }
     }
 }
