@@ -1,17 +1,15 @@
 package com.lapoushko.profile_impl.presentation.screen
 
-import com.lapoushko.profile_impl.domain.DeliveryAddress
-import com.lapoushko.profile_impl.domain.Order
-import com.lapoushko.profile_impl.domain.Product
+import com.lapoushko.profile_impl.domain.model.DeliveryAddress
+import com.lapoushko.profile_impl.domain.model.Order
+import com.lapoushko.profile_impl.domain.model.Product
+import com.lapoushko.profile_impl.domain.model.Profile
 
 /**
  * @author Lapoushko
  */
 internal data class ProfileScreenState(
-    val name: String = "Нет имени",
-    val whoAreYou: WhoAreYou = WhoAreYou.NONE,
-    val jobTitle: JobTitle = JobTitle.NONE,
-    val speciality: Speciality = Speciality.NONE,
+    val profile: Profile = Profile(),
     val bonus: Int = 0,
     val countFeaturedProducts: Int = 0,
     val countOrders: Int = 0,
@@ -24,39 +22,4 @@ internal data class ProfileScreenState(
         DeliveryAddress().copy(isSelected = true),
         DeliveryAddress()
     )
-) {
-    internal enum class WhoAreYou(val title: String) {
-        NONE("Не выбрано"),
-        DOCTOR_FOR_RENT("Врач на аренде"),
-        COSMETOLOGY("Косметология"),
-        BEAUTY_SALON("Салон красоты"),
-        DENTISTRY("Стоматология"),
-        TRADING_ORGANIZATION("Торгующая организация"),
-        LABORATORY("Лаборатория"),
-        PATIENT("Я пациент")
-    }
-
-    internal enum class JobTitle(val title: String) {
-        NONE("Не выбрано"),
-        ASSISTANT("Ассистент"),
-        SENIOR_NURSE("Старшая медсестра"),
-        PROCUREMENT_MANAGER("Менеджер по закупкам"),
-        CHIEF_DOCTOR("Главный врач"),
-        OWNER("Владелец"),
-        MANAGER("Управляющая"),
-        DENTIST("Врач стоматолог"),
-        ADMINISTRATOR("Администратор")
-    }
-
-    internal enum class Speciality(val title: String) {
-        NONE("Не выбрано"),
-        THERAPIST("Терапевт"),
-        ORTHOPEDIST("Ортопед"),
-        SURGEON("Хирург"),
-        ORTHODONTIST("Ортодонт"),
-        IMPLANTOLOGIST("Имплантолог"),
-        ENDODONTIST("Эндодонт"),
-        HYGIENIST("Гигиенист"),
-        OTHER("Другое")
-    }
-}
+)

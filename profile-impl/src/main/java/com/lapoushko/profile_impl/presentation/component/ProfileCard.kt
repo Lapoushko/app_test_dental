@@ -31,6 +31,7 @@ import com.lapoushko.core_ui.theme.MainBlue
 import com.lapoushko.core_ui.theme.SecondBlue
 import com.lapoushko.core_ui.theme.White
 import com.lapoushko.profile_impl.R
+import com.lapoushko.profile_impl.domain.model.Profile
 import com.lapoushko.profile_impl.presentation.screen.ProfileScreenState
 
 @Composable
@@ -89,9 +90,9 @@ private fun NameProfile(state: ProfileScreenState) {
                     .clip(RoundedCornerShape(100.dp))
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                with(state) {
+                with(state.profile) {
                     Text(text = name, style = H5Medium, color = White)
-                    if (speciality == ProfileScreenState.Speciality.NONE && jobTitle == ProfileScreenState.JobTitle.NONE) {
+                    if (speciality == Profile.Speciality.NONE && jobTitle == Profile.JobTitle.NONE) {
                         Text("Должность и специализация", style = H5Medium, color = LightGray)
                     } else {
                         Row(

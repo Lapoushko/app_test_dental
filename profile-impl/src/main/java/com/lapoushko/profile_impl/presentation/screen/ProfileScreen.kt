@@ -19,6 +19,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,9 +29,13 @@ import com.lapoushko.core_ui.theme.AppTypography.H4Bold
 import com.lapoushko.core_ui.theme.MainBlue
 import com.lapoushko.core_ui.theme.MainBlue10
 import com.lapoushko.profile_impl.R
+import com.lapoushko.profile_impl.domain.usecase.GetProfileUseCase
+import com.lapoushko.profile_impl.domain.usecase.GetProfileUseCaseImpl
 import com.lapoushko.profile_impl.presentation.component.Orders
 import com.lapoushko.profile_impl.presentation.component.ProfileCard
 import com.lapoushko.profile_impl.presentation.component.WalletAndChat
+import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.getKoin
 
 /**
  * @author Lapoushko
@@ -38,9 +43,13 @@ import com.lapoushko.profile_impl.presentation.component.WalletAndChat
 @Composable
 fun ProfileScreen() {
     ProfileScreen(
-        viewModel = viewModel(
-            factory = ProfileScreenViewModel.Factory,
-            extras = MutableCreationExtras().apply {}
+        viewModel = viewModel(factory = ProfileScreenViewModel.Factory,
+            extras = MutableCreationExtras().apply {
+                set(
+                    ProfileScreenViewModel.GET_PROFILE,
+                    getKoin().get<GetProfileUseCase>()
+                )
+            }
         )
     )
 }
@@ -49,7 +58,6 @@ fun ProfileScreen() {
 private fun ProfileScreen(
     viewModel: ProfileScreenViewModel
 ) {
-    val scrollState: LazyListState = rememberLazyListState()
     val state = viewModel.state
     Scaffold(
         modifier = Modifier.padding(start = 20.dp, end = 20.dp),
@@ -58,7 +66,6 @@ private fun ProfileScreen(
         }
     ) { innerPadding ->
         LazyColumn(
-            state = scrollState,
             modifier = Modifier
                 .padding(innerPadding),
             contentPadding = PaddingValues(

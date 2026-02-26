@@ -51,10 +51,12 @@ import com.lapoushko.core_ui.theme.TooLightGray
 import com.lapoushko.core_ui.theme.White
 import com.lapoushko.core_ui.util.extractCityAndDeclensions
 import com.lapoushko.profile_impl.R
-import com.lapoushko.profile_impl.domain.DeliveryAddress
-import com.lapoushko.profile_impl.domain.Order
-import com.lapoushko.profile_impl.domain.Product
+import com.lapoushko.profile_impl.domain.model.DeliveryAddress
+import com.lapoushko.profile_impl.domain.model.Order
+import com.lapoushko.profile_impl.domain.model.Product
 import com.lapoushko.profile_impl.presentation.screen.ProfileScreenState
+import com.lapoushko.profile_impl.presentation.screen.ProfileScreenViewModel
+import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 
 @Composable

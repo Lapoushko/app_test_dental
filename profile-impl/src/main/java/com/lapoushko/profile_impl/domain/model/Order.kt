@@ -1,4 +1,4 @@
-package com.lapoushko.profile_impl.domain
+package com.lapoushko.profile_impl.domain.model
 
 data class Order(
     val status: Status = Status.NONE,
