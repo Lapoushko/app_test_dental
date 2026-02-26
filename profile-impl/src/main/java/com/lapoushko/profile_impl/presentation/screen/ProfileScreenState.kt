@@ -1,4 +1,6 @@
-package com.lapoushko.profile_impl.presentation
+package com.lapoushko.profile_impl.presentation.screen
+
+import com.lapoushko.profile_impl.domain.Order
 
 /**
  * @author Lapoushko
@@ -14,8 +16,8 @@ internal data class ProfileScreenState(
     val countProductComparisons: Int = 0,
     val moneyInWallet: Int = 0,
     val unreadMessages: Int = 0,
-    val currentOrders: List<String> = emptyList(),
-    val historyOrders: List<String> = emptyList()
+    val currentOrders: List<Order> = emptyList(),
+    val historyOrders: List<Order> = emptyList()
 ){
     internal enum class WhoAreYou(val title: String) {
         NONE("Не выбрано"),

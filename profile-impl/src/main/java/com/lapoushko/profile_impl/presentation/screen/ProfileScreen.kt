@@ -1,15 +1,14 @@
-package com.lapoushko.profile_impl.presentation
+package com.lapoushko.profile_impl.presentation.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,9 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,12 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lapoushko.core_ui.theme.AppTypography.H4Bold
-import com.lapoushko.core_ui.theme.AppTypography.H5Medium
 import com.lapoushko.core_ui.theme.LightGray
 import com.lapoushko.core_ui.theme.MainBlue
 import com.lapoushko.core_ui.theme.MainBlue10
-import com.lapoushko.core_ui.theme.White
 import com.lapoushko.profile_impl.R
+import com.lapoushko.profile_impl.presentation.component.Orders
+import com.lapoushko.profile_impl.presentation.component.ProfileCard
+import com.lapoushko.profile_impl.presentation.component.WalletAndChat
 
 /**
  * @author Lapoushko
@@ -51,13 +49,24 @@ fun ProfileScreen() {
 private fun ProfileScreen(
     viewModel: ProfileScreenViewModel
 ) {
+    val scrollState = rememberScrollState()
+    val state = viewModel.state
     Scaffold(
         modifier = Modifier.padding(horizontal = 20.dp),
         topBar = {
             ProfileTopBar()
         }
     ) { innerPadding ->
-        ProfileCard(modifier = Modifier.padding(innerPadding), state = viewModel.state)
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.spacedBy(18.dp)
+        ) {
+            ProfileCard(state = state)
+            WalletAndChat(state = state)
+            Orders(state)
+        }
     }
 }
 
@@ -107,79 +116,6 @@ private fun ProfileTopBar(modifier: Modifier = Modifier) {
             }
         }
     )
-}
-
-@Composable
-private fun ProfileCard(
-    modifier: Modifier = Modifier,
-    state: ProfileScreenState
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(MainBlue, shape = RoundedCornerShape(20.dp)),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            NameProfile(state)
-            ContentInCardProfile(onClick = {}, state = state, content = {
-
-            })
-        }
-    }
-}
-
-@Composable
-private fun NameProfile(state: ProfileScreenState) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = painterResource(R.drawable.empty_user),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(52.dp)
-                    .clip(RoundedCornerShape(100.dp))
-            )
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                with(state) {
-                    Text(text = name, style = H5Medium, color = White)
-                    Text("$speciality $jobTitle", style = H5Medium, color = White)
-                }
-            }
-        }
-        Icon(
-            modifier = Modifier.size(24.dp),
-            tint = LightGray,
-            painter = painterResource(R.drawable.pen_icon),
-            contentDescription = "arrow back"
-        )
-    }
-}
-
-@Composable
-private fun ContentInCardProfile(
-    content: @Composable () -> Unit,
-    onClick: () -> Unit,
-    state: ProfileScreenState
-) {
-    Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-        IconButton(onClick = onClick) {
-            Icon(
-                painter = painterResource(R.drawable.arrow_right_icon),
-                contentDescription = "on click",
-                tint = White
-            )
-        }
-    }
 }
 
 @Preview
