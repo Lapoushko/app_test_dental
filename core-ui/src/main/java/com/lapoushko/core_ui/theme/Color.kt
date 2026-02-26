@@ -3,15 +3,15 @@ package com.lapoushko.core_ui.theme
 import androidx.compose.ui.graphics.Color
 
 val MainBlue = Color(0xFF1634F0)
-val Blue800 = Color(0xFF2E49F2)
+val MainBlue80 = Color(0xFF2E49F2)
 val Blue700 = Color(0xFF455DF3)
 val Blue600 = Color(0xFF5C71F5)
-val Blue500 = Color(0xFF7385F6)
+val MainBlue60 = Color(0xFF7385F6)
 val Blue400 = Color(0xFF8B9AF8)
 val Blue300 = Color(0xFFA2AEF9)
 val Blue200 = Color(0xFFBAC3FB)
 val Blue100 = Color(0xFFD0D6FC)
-val Blue50  = Color(0xFFE8EBFE)
+val MainBlue10  = Color(0xFFE8EBFE)
 
 // Second Blue
 val SecondBlue = Color(0xFF007AEB)
@@ -23,7 +23,7 @@ val SkyBlue400 = Color(0xFF80BDF5)
 val SkyBlue300 = Color(0xFF99CAF7)
 val SkyBlue200 = Color(0xFFB3D8F9)
 val SkyBlue100 = Color(0xFFCCE4FB)
-val SkyBlue50  = Color(0xFFE6F2FD)
+val SecondBlue10  = Color(0xFFE6F2FD)
 
 // Green
 val Green = Color(0xFF0BDF47)
@@ -59,7 +59,7 @@ val Orange400 = Color(0xFFFFC380)
 val Orange300 = Color(0xFFFFCF99)
 val Orange200 = Color(0xFFFFDBB3)
 val Orange100 = Color(0xFFFFE7CC)
-val Orange50  = Color(0xFFFFF3E6)
+val Orange10  = Color(0xFFFFF3E6)
 
 // Yellow
 val Yellow = Color(0xFFFFF500)
@@ -83,7 +83,7 @@ val LightGray = Color(0xFF999999)
 val Gray300 = Color(0xFFB3B3B3)
 val Gray200 = Color(0xFFCCCCCC)
 val TooLightGray = Color(0xFFE6E6E6)
-val Gray50  = Color(0xFFFAFAFA)
+val GrayScale10  = Color(0xFFFAFAFA)
 
 // Black & White
 val Black = Color(0xFF000000)

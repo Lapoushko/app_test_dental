@@ -57,6 +57,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(project(":navigation"))
+    implementation(project(":profile-impl"))
+    implementation(project(":database"))
 
     // Koin
     implementation(libs.koin.android)

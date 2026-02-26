@@ -66,4 +66,5 @@ dependencies {
     implementation(libs.koin.androidx.compose)
 
     implementation(project(":core-ui"))
+    implementation(project(":profile-impl"))
 }
