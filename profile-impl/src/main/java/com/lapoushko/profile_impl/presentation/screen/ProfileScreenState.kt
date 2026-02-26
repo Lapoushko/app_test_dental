@@ -1,6 +1,8 @@
 package com.lapoushko.profile_impl.presentation.screen
 
+import com.lapoushko.profile_impl.domain.DeliveryAddress
 import com.lapoushko.profile_impl.domain.Order
+import com.lapoushko.profile_impl.domain.Product
 
 /**
  * @author Lapoushko
@@ -16,9 +18,13 @@ internal data class ProfileScreenState(
     val countProductComparisons: Int = 0,
     val moneyInWallet: Int = 0,
     val unreadMessages: Int = 0,
-    val currentOrders: List<Order> = emptyList(),
-    val historyOrders: List<Order> = emptyList()
-){
+    val currentOrders: List<Order> = listOf(Order().copy(products = listOf(Product()))),
+    val historyOrders: List<Order> = listOf(Order()),
+    val deliveryAddresses: List<DeliveryAddress> = listOf(
+        DeliveryAddress().copy(isSelected = true),
+        DeliveryAddress()
+    )
+) {
     internal enum class WhoAreYou(val title: String) {
         NONE("Не выбрано"),
         DOCTOR_FOR_RENT("Врач на аренде"),

@@ -2,6 +2,7 @@ package com.lapoushko.profile_impl.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -18,9 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lapoushko.core_ui.theme.AppTypography.H4Medium
 import com.lapoushko.core_ui.theme.AppTypography.H5Medium
+import com.lapoushko.core_ui.theme.Black
 import com.lapoushko.core_ui.theme.LightGray
 import com.lapoushko.core_ui.theme.MainBlue
 import com.lapoushko.core_ui.theme.SecondBlue
@@ -43,22 +48,22 @@ internal fun ProfileCard(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             NameProfile(state)
-            ContentInCardProfile(onClick = {}, state = state, content = {
+            ContentInCardProfile(onClick = {}, content = {
                 ContentCountBonus(state)
             })
-            ContentInCardProfile(onClick = {}, state = state, content = {
+            ContentInCardProfile(onClick = {}, content = {
                 ContentFavouriteProducts(state)
             })
-            ContentInCardProfile(onClick = {}, state = state, content = {
+            ContentInCardProfile(onClick = {}, content = {
                 ContentYourOrders(state)
             })
-            ContentInCardProfile(onClick = {}, state = state, content = {
+            ContentInCardProfile(onClick = {}, content = {
                 ContentReviews()
             })
-            ContentInCardProfile(onClick = {}, state = state, content = {
+            ContentInCardProfile(onClick = {}, content = {
                 ContentComparing(state)
             })
-            ContentInCardProfile(onClick = {}, state = state, content = {
+            ContentInCardProfile(onClick = {}, content = {
                 ContentStats()
             })
         }
@@ -86,12 +91,28 @@ private fun NameProfile(state: ProfileScreenState) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 with(state) {
                     Text(text = name, style = H5Medium, color = White)
-                    Text("$speciality $jobTitle", style = H5Medium, color = White)
+                    if (speciality == ProfileScreenState.Speciality.NONE && jobTitle == ProfileScreenState.JobTitle.NONE) {
+                        Text("Должность и специализация", style = H5Medium, color = LightGray)
+                    } else {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(speciality.title, style = H5Medium, color = White)
+                            Icon(
+                                painterResource(R.drawable.circle_between_text),
+                                contentDescription = "circle",
+                                tint = White,
+                                modifier = Modifier.size(3.dp)
+                            )
+                            Text(jobTitle.title, style = H5Medium, color = White)
+                        }
+                    }
                 }
             }
         }
         Icon(
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier.size(24.dp).clickable(onClick = {}),
             tint = White,
             painter = painterResource(R.drawable.pen_icon),
             contentDescription = "arrow back"
@@ -103,23 +124,27 @@ private fun NameProfile(state: ProfileScreenState) {
 private fun ContentInCardProfile(
     content: @Composable () -> Unit,
     onClick: () -> Unit,
-    state: ProfileScreenState
 ) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .background(LightGray, shape = RoundedCornerShape(12.dp))
-            .padding(horizontal = 16.dp, vertical = 14.dp)
-            .fillMaxWidth()
+    Button(
+        onClick = {},
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Black.copy(alpha = 0.2f)
+        ),
     ) {
-        content()
-        IconButton(onClick = onClick) {
-            Icon(
-                painter = painterResource(R.drawable.arrow_right_icon),
-                contentDescription = "on click",
-                tint = White
-            )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ){
+            content()
+            IconButton(onClick = onClick) {
+                Icon(
+                    painter = painterResource(R.drawable.arrow_right_icon),
+                    contentDescription = "on click",
+                    tint = White
+                )
+            }
         }
     }
 }
@@ -190,7 +215,7 @@ private fun ContentYourOrders(state: ProfileScreenState) {
                 color = White,
                 modifier = Modifier
                     .background(color = SecondBlue, shape = RoundedCornerShape(6.dp))
-                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                    .padding(horizontal = 6.dp)
             )
         }
     }
@@ -252,4 +277,10 @@ private fun ContentStats() {
         )
         Text(text = "Статистика", style = H4Medium, color = White)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProfileCardPreview() {
+    ProfileCard(state = ProfileScreenState())
 }

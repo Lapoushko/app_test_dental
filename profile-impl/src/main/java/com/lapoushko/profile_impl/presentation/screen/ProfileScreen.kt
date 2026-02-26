@@ -2,13 +2,14 @@ package com.lapoushko.profile_impl.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lapoushko.core_ui.theme.AppTypography.H4Bold
-import com.lapoushko.core_ui.theme.LightGray
 import com.lapoushko.core_ui.theme.MainBlue
 import com.lapoushko.core_ui.theme.MainBlue10
 import com.lapoushko.profile_impl.R
@@ -49,23 +49,29 @@ fun ProfileScreen() {
 private fun ProfileScreen(
     viewModel: ProfileScreenViewModel
 ) {
-    val scrollState = rememberScrollState()
+    val scrollState: LazyListState = rememberLazyListState()
     val state = viewModel.state
     Scaffold(
-        modifier = Modifier.padding(horizontal = 20.dp),
+        modifier = Modifier.padding(start = 20.dp, end = 20.dp),
         topBar = {
             ProfileTopBar()
         }
     ) { innerPadding ->
-        Column(
+        LazyColumn(
+            state = scrollState,
             modifier = Modifier
-                .verticalScroll(scrollState)
                 .padding(innerPadding),
+            contentPadding = PaddingValues(
+                start = 0.dp,
+                top = 12.dp,
+                end = 0.dp,
+                bottom = 18.dp
+            ),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
-            ProfileCard(state = state)
-            WalletAndChat(state = state)
-            Orders(state)
+            item { ProfileCard(state = state) }
+            item { WalletAndChat(state = state) }
+            item { Orders(state) }
         }
     }
 }
@@ -102,7 +108,6 @@ private fun ProfileTopBar(modifier: Modifier = Modifier) {
         navigationIcon = {
             Icon(
                 modifier = Modifier.size(40.dp),
-                tint = LightGray,
                 painter = painterResource(R.drawable.arrow_left_icon),
                 contentDescription = "arrow back"
             )
