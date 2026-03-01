@@ -8,6 +8,7 @@ internal data class Profile(
     val whoAreYou: WhoAreYou = WhoAreYou.NONE,
     val jobTitle: JobTitle = JobTitle.NONE,
     val speciality: Speciality = Speciality.NONE,
+    val imageUrl: String = ""
 ){
     internal enum class WhoAreYou(val title: String) {
         NONE("Не выбрано"),

@@ -38,7 +38,6 @@ import com.lapoushko.core_ui.theme.AppTypography.H4Medium
 import com.lapoushko.core_ui.theme.AppTypography.H5Medium
 import com.lapoushko.core_ui.theme.AppTypography.H5Regular
 import com.lapoushko.core_ui.theme.Black
-import com.lapoushko.core_ui.theme.GrayScale10
 import com.lapoushko.core_ui.theme.MainBlue
 import com.lapoushko.core_ui.theme.MainBlue10
 import com.lapoushko.core_ui.theme.MiddleGray
@@ -47,6 +46,7 @@ import com.lapoushko.core_ui.theme.Orange10
 import com.lapoushko.core_ui.theme.Red
 import com.lapoushko.core_ui.theme.SecondBlue
 import com.lapoushko.core_ui.theme.SecondBlue10
+import com.lapoushko.core_ui.theme.SuperLightGray
 import com.lapoushko.core_ui.theme.TooLightGray
 import com.lapoushko.core_ui.theme.White
 import com.lapoushko.core_ui.util.extractCityAndDeclensions
@@ -55,8 +55,6 @@ import com.lapoushko.profile_impl.domain.model.DeliveryAddress
 import com.lapoushko.profile_impl.domain.model.Order
 import com.lapoushko.profile_impl.domain.model.Product
 import com.lapoushko.profile_impl.presentation.screen.ProfileScreenState
-import com.lapoushko.profile_impl.presentation.screen.ProfileScreenViewModel
-import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 
 @Composable
@@ -188,7 +186,7 @@ private fun ListProducts(products: List<Product>) {
                     .size(64.dp)
                     .clickable { /* onClick */ },
                 shape = RoundedCornerShape(8.dp),
-                colors = CardDefaults.cardColors(containerColor = GrayScale10)
+                colors = CardDefaults.cardColors(containerColor = SuperLightGray)
             ) {
                 Box(
                     modifier = Modifier.fillMaxSize(),

@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":navigation"))
     implementation(project(":profile-impl"))
     implementation(project(":database"))
+    implementation(project(":edit-profile-impl"))
 
     // Koin
     implementation(libs.koin.android)

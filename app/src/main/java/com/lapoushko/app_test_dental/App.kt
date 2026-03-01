@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.lapoushko.database.di.DatabaseDI
+import com.lapoushko.edit_profile_impl.presentation.di.EditProfileDI
 import com.lapoushko.navigation.screen.BottomBarScreen
 import com.lapoushko.profile_impl.di.ProfileDI
 import org.koin.android.ext.koin.androidContext
@@ -21,6 +22,7 @@ class App: Application() {
             androidContext(this@App)
             modules(
                 ProfileDI.module,
+                EditProfileDI.module,
                 DatabaseDI.module
             )
         }
