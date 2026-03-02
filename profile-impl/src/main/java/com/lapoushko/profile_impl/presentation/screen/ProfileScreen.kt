@@ -41,22 +41,27 @@ import org.koin.compose.getKoin
  * @author Lapoushko
  */
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onToEditProfile: () -> Unit
+) {
     ProfileScreen(
-        viewModel = viewModel(factory = ProfileScreenViewModel.Factory,
+        viewModel = viewModel(
+            factory = ProfileScreenViewModel.Factory,
             extras = MutableCreationExtras().apply {
                 set(
                     ProfileScreenViewModel.GET_PROFILE,
                     getKoin().get<GetProfileUseCase>()
                 )
             }
-        )
+        ),
+        onToEditProfile = onToEditProfile
     )
 }
 
 @Composable
 private fun ProfileScreen(
-    viewModel: ProfileScreenViewModel
+    viewModel: ProfileScreenViewModel,
+    onToEditProfile: () -> Unit
 ) {
     val state = viewModel.state
     Scaffold(
@@ -76,7 +81,7 @@ private fun ProfileScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
-            item { ProfileCard(state = state) }
+            item { ProfileCard(state = state, onToEditProfile = onToEditProfile) }
             item { WalletAndChat(state = state) }
             item { Orders(state) }
         }
@@ -133,5 +138,5 @@ private fun ProfileTopBar(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun ProfileScreenPreview() {
-    ProfileScreen()
+    ProfileScreen(onToEditProfile = {})
 }

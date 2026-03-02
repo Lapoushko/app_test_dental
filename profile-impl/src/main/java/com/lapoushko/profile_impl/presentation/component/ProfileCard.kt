@@ -37,7 +37,8 @@ import com.lapoushko.profile_impl.presentation.screen.ProfileScreenState
 @Composable
 internal fun ProfileCard(
     modifier: Modifier = Modifier,
-    state: ProfileScreenState
+    state: ProfileScreenState,
+    onToEditProfile: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -48,7 +49,7 @@ internal fun ProfileCard(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            NameProfile(state)
+            NameProfile(state, onToEditProfile)
             ContentInCardProfile(onClick = {}, content = {
                 ContentCountBonus(state)
             })
@@ -72,7 +73,7 @@ internal fun ProfileCard(
 }
 
 @Composable
-private fun NameProfile(state: ProfileScreenState) {
+private fun NameProfile(state: ProfileScreenState, onToEditProfile: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -113,10 +114,12 @@ private fun NameProfile(state: ProfileScreenState) {
             }
         }
         Icon(
-            modifier = Modifier.size(24.dp).clickable(onClick = {}),
+            modifier = Modifier
+                .size(24.dp)
+                .clickable(onClick = { onToEditProfile() }),
             tint = White,
             painter = painterResource(R.drawable.pen_icon),
-            contentDescription = "arrow back"
+            contentDescription = "pen icon"
         )
     }
 }
@@ -137,7 +140,7 @@ private fun ContentInCardProfile(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
-        ){
+        ) {
             content()
             IconButton(onClick = onClick) {
                 Icon(
@@ -283,5 +286,5 @@ private fun ContentStats() {
 @Preview(showBackground = true)
 @Composable
 private fun ProfileCardPreview() {
-    ProfileCard(state = ProfileScreenState())
+    ProfileCard(state = ProfileScreenState(), onToEditProfile = {})
 }

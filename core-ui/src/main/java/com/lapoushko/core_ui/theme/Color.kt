@@ -22,7 +22,7 @@ val SkyBlue500 = Color(0xFF66AFF3)
 val SkyBlue400 = Color(0xFF80BDF5)
 val SkyBlue300 = Color(0xFF99CAF7)
 val SkyBlue200 = Color(0xFFB3D8F9)
-val SkyBlue100 = Color(0xFFCCE4FB)
+val SecondBlue20 = Color(0xFFCCE4FB)
 val SecondBlue10  = Color(0xFFE6F2FD)
 
 // Green
@@ -58,7 +58,7 @@ val Orange500 = Color(0xFFFFB766)
 val Orange400 = Color(0xFFFFC380)
 val Orange300 = Color(0xFFFFCF99)
 val Orange200 = Color(0xFFFFDBB3)
-val Orange100 = Color(0xFFFFE7CC)
+val Orange20 = Color(0xFFFFE7CC)
 val Orange10  = Color(0xFFFFF3E6)
 
 // Yellow
@@ -83,7 +83,7 @@ val LightGray = Color(0xFF999999)
 val Gray300 = Color(0xFFB3B3B3)
 val Gray200 = Color(0xFFCCCCCC)
 val TooLightGray = Color(0xFFE6E6E6)
-val GrayScale10  = Color(0xFFFAFAFA)
+val SuperLightGray  = Color(0xFFFAFAFA)
 
 // Black & White
 val Black = Color(0xFF000000)

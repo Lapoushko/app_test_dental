@@ -1,17 +1,25 @@
-package com.lapoushko.profile_impl.domain.model
+package com.lapoushko.edit_profile_impl.domain.model
 
 /**
  * @author Lapoushko
  */
 internal data class Profile(
-    val name: String = "Нет имени",
+    val name: String = "",
     val whoAreYou: WhoAreYou = WhoAreYou.NONE,
     val jobTitle: JobTitle = JobTitle.NONE,
     val speciality: Speciality = Speciality.NONE,
     val imageUrl: String = ""
 ){
-    internal enum class WhoAreYou(val title: String) {
-        NONE("Не выбрано"),
+    sealed interface ProfileOption {
+        val title: String
+        val isSelectable: Boolean
+            get() = true
+    }
+
+    internal enum class WhoAreYou(override val title: String): ProfileOption {
+        NONE("Не выбрано") {
+            override val isSelectable = false
+        },
         DOCTOR_FOR_RENT("Врач на аренде"),
         COSMETOLOGY("Косметология"),
         BEAUTY_SALON("Салон красоты"),
@@ -21,8 +29,10 @@ internal data class Profile(
         PATIENT("Я пациент")
     }
 
-    internal enum class JobTitle(val title: String) {
-        NONE("Не выбрано"),
+    internal enum class JobTitle(override val title: String): ProfileOption {
+        NONE("Не выбрано") {
+            override val isSelectable = false
+        },
         ASSISTANT("Ассистент"),
         SENIOR_NURSE("Старшая медсестра"),
         PROCUREMENT_MANAGER("Менеджер по закупкам"),
@@ -33,8 +43,10 @@ internal data class Profile(
         ADMINISTRATOR("Администратор")
     }
 
-    internal enum class Speciality(val title: String) {
-        NONE("Не выбрано"),
+    internal enum class Speciality(override val title: String): ProfileOption {
+        NONE("Не выбрано") {
+            override val isSelectable = false
+        },
         THERAPIST("Терапевт"),
         ORTHOPEDIST("Ортопед"),
         SURGEON("Хирург"),

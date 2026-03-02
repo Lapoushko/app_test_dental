@@ -1,10 +1,12 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-parcelize")
+    kotlin("plugin.serialization") version "2.0.0"
 }
 
 android {
-    namespace = "com.lapoushko.app_test_dental"
+    namespace = "com.lapoushko.edit_profile_impl"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -12,13 +14,10 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.lapoushko.app_test_dental"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -34,37 +33,42 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    buildFeatures {
+    buildFeatures{
         compose = true
     }
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-    implementation(project(":core-ui"))
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    implementation(project(":navigation"))
-    implementation(project(":profile-impl"))
-    implementation(project(":database"))
-    implementation(project(":edit-profile-impl"))
+    implementation(libs.androidx.compose.material3)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+
+    //Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    //Serialization
+    implementation(libs.kotlinx.serialization.json.jvm)
 
     // Koin
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.navigation)
     implementation(libs.koin.androidx.compose)
 
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    implementation(project(":core-ui"))
+    implementation(project(":database"))
 }

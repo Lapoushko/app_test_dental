@@ -67,4 +67,5 @@ dependencies {
 
     implementation(project(":core-ui"))
     implementation(project(":profile-impl"))
+    implementation(project(":edit-profile-impl"))
 }
