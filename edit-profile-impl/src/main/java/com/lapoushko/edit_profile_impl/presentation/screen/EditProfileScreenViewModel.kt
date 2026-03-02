@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.lapoushko.edit_profile_impl.domain.model.Profile
+import com.lapoushko.edit_profile_impl.domain.usecase.ClearProfileUseCase
 import com.lapoushko.edit_profile_impl.domain.usecase.GetProfileUseCase
 import com.lapoushko.edit_profile_impl.domain.usecase.SaveProfileUseCase
 import kotlinx.coroutines.flow.combine
@@ -19,7 +20,8 @@ import kotlin.reflect.KClass
  */
 internal class EditProfileScreenViewModel(
     private val getProfileUseCase: GetProfileUseCase,
-    private val saveProfileUseCase: SaveProfileUseCase
+    private val saveProfileUseCase: SaveProfileUseCase,
+    private val clearProfileUseCase: ClearProfileUseCase
 ) : ViewModel() {
     var state by mutableStateOf(EditProfileScreenState())
         private set
@@ -58,7 +60,13 @@ internal class EditProfileScreenViewModel(
                 updateName(event.newName)
             }
 
-            is EditProfileScreenEvent.SaveProfileEvent -> TODO()
+            EditProfileScreenEvent.DeleteProfileEvent -> {
+                deleteProfile()
+            }
+
+            EditProfileScreenEvent.SaveProfileEvent -> {
+                updateProfile(state.profile)
+            }
         }
     }
 
@@ -99,9 +107,9 @@ internal class EditProfileScreenViewModel(
         }
     }
 
-    private fun saveProfile(){
+    private fun deleteProfile(){
         viewModelScope.launch {
-            saveProfileUseCase.invoke(state.profile)
+            clearProfileUseCase.invoke()
         }
     }
 
@@ -114,13 +122,18 @@ internal class EditProfileScreenViewModel(
                 val saveProfileUseCase = requireNotNull(get(SAVE_PROFILE)) {
                     "Here initialized saveProfileUseCase is null"
                 }
+                val clearProfileUseCase = requireNotNull(get(CLEAR_PROFILE)) {
+                    "Here initialized saveProfileUseCase is null"
+                }
                 EditProfileScreenViewModel(
                     getProfileUseCase = getProfileUseCase,
-                    saveProfileUseCase = saveProfileUseCase
+                    saveProfileUseCase = saveProfileUseCase,
+                    clearProfileUseCase = clearProfileUseCase
                 )
             }
         }
         val GET_PROFILE = object : CreationExtras.Key<GetProfileUseCase> {}
         val SAVE_PROFILE = object : CreationExtras.Key<SaveProfileUseCase> {}
+        val CLEAR_PROFILE = object : CreationExtras.Key<ClearProfileUseCase> {}
     }
 }

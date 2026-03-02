@@ -25,4 +25,10 @@ internal class EditProfileRepositoryImpl(
             dao.insert(profile.toDto())
         }
     }
+
+    override suspend fun clearProfile() {
+        withContext(Dispatchers.IO){
+            dao.clear()
+        }
+    }
 }

@@ -10,4 +10,6 @@ internal interface EditProfileRepository {
     fun getProfile(): Flow<Profile>
 
     suspend fun saveProfile(profile: Profile)
+
+    suspend fun clearProfile()
 }

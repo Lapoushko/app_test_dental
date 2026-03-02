@@ -18,5 +18,7 @@ internal sealed interface EditProfileScreenEvent {
 
     data class UpdateNameEvent(val newName: String): EditProfileScreenEvent
 
-    data class SaveProfileEvent(val profile: Profile): EditProfileScreenEvent
+    data object DeleteProfileEvent: EditProfileScreenEvent
+
+    data object SaveProfileEvent: EditProfileScreenEvent
 }

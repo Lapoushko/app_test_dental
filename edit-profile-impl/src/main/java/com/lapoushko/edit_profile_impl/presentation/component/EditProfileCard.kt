@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,6 +27,7 @@ import com.lapoushko.core_ui.theme.LightGray
 import com.lapoushko.core_ui.theme.TooLightGray
 import com.lapoushko.core_ui.theme.White
 import com.lapoushko.edit_profile_impl.R
+import com.lapoushko.edit_profile_impl.domain.model.Profile
 import com.lapoushko.edit_profile_impl.presentation.screen.EditProfileScreenState
 
 @Composable
@@ -54,7 +56,23 @@ internal fun NameProfile(state: EditProfileScreenState) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 with(state.profile) {
                     Text(text = name.ifEmpty { "Нет имени" }, style = H4Medium, color = Black)
-                    Text("Должность и специализация", style = H5Medium, color = LightGray)
+                    if (speciality == Profile.Speciality.NONE && jobTitle == Profile.JobTitle.NONE) {
+                        Text("Должность и специализация", style = H5Medium, color = LightGray)
+                    } else {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(speciality.title, style = H5Medium, color = Black)
+                            Icon(
+                                painterResource(R.drawable.circle_between_text),
+                                contentDescription = "circle",
+                                tint = Black,
+                                modifier = Modifier.size(3.dp)
+                            )
+                            Text(jobTitle.title, style = H5Medium, color = Black)
+                        }
+                    }
                 }
             }
         }
@@ -64,5 +82,5 @@ internal fun NameProfile(state: EditProfileScreenState) {
 @Preview(showBackground = true)
 @Composable
 private fun EditProfileCardPreview(){
-    NameProfile(EditProfileScreenState())
+    NameProfile(EditProfileScreenState(profile = Profile(jobTitle = Profile.JobTitle.CHIEF_DOCTOR)))
 }

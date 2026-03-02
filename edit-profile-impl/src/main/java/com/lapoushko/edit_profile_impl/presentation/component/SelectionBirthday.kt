@@ -26,12 +26,14 @@ import com.lapoushko.core_ui.theme.SuperLightGray
 import com.lapoushko.core_ui.theme.TooLightGray
 
 @Composable
-internal fun SelectionBirthday() {
+internal fun SelectionBirthday(
+    onSave: () -> Unit
+) {
     BackgroundColumnComponents(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         TextFieldBirthday()
-        AcceptButton()
+        AcceptButton(onSave)
         WarningComponent()
     }
 }
@@ -67,9 +69,9 @@ private fun TextFieldBirthday() {
 }
 
 @Composable
-private fun AcceptButton() {
+private fun AcceptButton(onSave: () -> Unit) {
     TextButton(
-        onClick = {},
+        onClick = onSave,
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
@@ -88,5 +90,5 @@ private fun AcceptButton() {
 @Preview(showBackground = false)
 @Composable
 private fun SelectionBirthdayPreview() {
-    SelectionBirthday()
+    SelectionBirthday({})
 }
